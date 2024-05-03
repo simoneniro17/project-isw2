@@ -14,7 +14,7 @@ public class JSONManager {
     private JSONManager() {}
     
     /**
-     * reads all characters from a Reader and returns them as a String
+     * Reads all characters from a Reader and returns them as a String
      * @param reader the Reader to read from
      * @return a String containing all characters read from the Reader
      * @throws IOException if an I/O error occurs while reading from the Reader
@@ -32,7 +32,7 @@ public class JSONManager {
     }
     
     /**
-     * reads a JSONArray from a URL and returns it
+     * Reads a JSONArray from a URL and returns it
      * @param url the URL to read the JSONArray from
      * @return the JSONArray read from the URL
      * @throws IOException if an I/O error occurs while reading from the URL
@@ -47,7 +47,7 @@ public class JSONManager {
     }
     
     /**
-     * reads a JSONObject from a URL and returns it
+     * Reads a JSONObject from a URL and returns it
      * @param url the URL to read the JSONObject from
      * @return the JSONObject read from the URL
      * @throws IOException if an I/O error occurs while reading from the URL
