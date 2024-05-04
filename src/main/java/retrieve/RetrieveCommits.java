@@ -54,7 +54,7 @@ public class RetrieveCommits {
             List<Ticket> buggyTicketsList = getBuggyTickets(revCommit, ticketList);
             
             // update commit info
-            commit.setTouchedClasses(touchedClassesList);
+            commit.setClasses(touchedClassesList);
             commit.setBuggyTickets(buggyTicketsList);
             
             commitList.add(commit);
