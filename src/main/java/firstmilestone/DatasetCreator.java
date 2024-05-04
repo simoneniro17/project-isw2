@@ -1,3 +1,5 @@
+package firstmilestone;
+
 import model.Ticket;
 import model.Version;
 import org.eclipse.jgit.api.Git;
