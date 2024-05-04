@@ -1,10 +1,12 @@
 package firstmilestone;
 
+import model.Commit;
 import model.Ticket;
 import model.Version;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.json.JSONException;
+import retrieve.RetrieveCommits;
 import retrieve.RetrieveTickets;
 import utils.Printer;
 import utils.Properties;
@@ -20,10 +22,12 @@ public class DatasetCreator {
     String projectName;
     String path;
     private RetrieveTickets retrieveTickets;
+    private RetrieveCommits retrieveCommits;
     
     public DatasetCreator(String projectName) {
         this.projectName = projectName;
         retrieveTickets = new RetrieveTickets(projectName);
+        retrieveCommits = new RetrieveCommits();
     }
     
     /**
@@ -38,7 +42,7 @@ public class DatasetCreator {
             
             git = openOrCreateRepository(dir, Properties.GIT_HUB_URL + projectName);
             
-            Printer.printMessage("Repository cloned in : " + Paths.get(path, projectName));
+            Printer.printMessage("Repository cloned in: " + Paths.get(path, projectName) + "\n");
         } catch (GitAPIException | IOException e) {
             Printer.printError("Could not initialize project: " + projectName + ": " + e.getMessage());
         }
@@ -46,6 +50,10 @@ public class DatasetCreator {
     
     public List<Ticket> getTickets(List<Version> versionList) throws JSONException, IOException, ParseException {
         return retrieveTickets.getTicketList(versionList);
+    }
+    
+    public List<Commit> getCommits(List<Ticket> ticketList, List<Version> versionList) throws JSONException, IOException, GitAPIException {
+        return retrieveCommits.getCommits(git, ticketList, versionList);
     }
     
     /**
@@ -59,7 +67,7 @@ public class DatasetCreator {
     private Git openOrCreateRepository(File dir, String url) throws GitAPIException, IOException {
         Git git;
         if (dir.list().length == 0) {
-            Printer.printMessage("cloning " + projectName + " repository in " + path);
+            Printer.printMessage("Cloning " + projectName + " repository in " + path);
             git = Git.cloneRepository().setURI(url).setDirectory(dir).call();
         } else {
             git = Git.open(dir);
