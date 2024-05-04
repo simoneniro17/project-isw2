@@ -11,12 +11,4 @@ public class Properties {
     public static final String GIT_HUB_URL = "https://github.com/apache/";
     
     private Properties() {}
-    
-    /* public static void prova() {
-        System.out.println(GIT_HUB_URL + COMMON_PROJECT);
-    }
-    
-    public static void main(String[] args) {
-        prova();
-    } */
 }
