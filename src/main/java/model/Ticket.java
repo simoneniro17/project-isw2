@@ -22,6 +22,41 @@ public class Ticket {
         this.fixedVersion = fixedVersion;
     }
     
+    /**
+     * Sets the affected version of the ticket based on a given proportion and a list of versions.
+     * The affected version is calculated based on the proportion between the opening and fixed versions.
+     * @param proportion the proportion used to calculate the position of the affected version
+     * @param versionList the list of versions from which to select the affected version
+     */
+    public void setAffectedVersionByProportion(float proportion, List<Version> versionList) {
+        // calculate the position of the affected version
+        float openingVersionRelease = openingVersion.getNumberOfReleases();
+        int newPosition = calculateNewPosition(proportion, openingVersionRelease);
+        
+        // set the affected version based on the calculated position
+        affectedVersion = versionList.get(newPosition - 1);
+        affectedVersion.setNumberOfReleases(newPosition);
+    }
+    
+    /**
+     * Calculates the new position of the affected version based on a given proportion
+     * and the number of releases between the opening and fixed versions.
+     * @param proportion the proportion used to calculate the new position of the affected version
+     * @param openingVersionRelease the number of releases of the opening version
+     * @return the new position of the affected version
+     */
+    private int calculateNewPosition(float proportion, float openingVersionRelease) {
+        float fixedVersionRelease = fixedVersion.getNumberOfReleases();
+        
+        float newPositionFloat = fixedVersionRelease - (fixedVersionRelease - openingVersionRelease) * proportion;
+        
+        int newPosition = Math.round(newPositionFloat);
+        if (newPosition < 1) {
+            newPosition = 1;
+        }
+        return newPosition;
+    }
+    
     public long getId() {
         return id;
     }

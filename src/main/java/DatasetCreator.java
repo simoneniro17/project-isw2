@@ -1,19 +1,27 @@
+import model.Ticket;
+import model.Version;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
+import org.json.JSONException;
+import retrieve.RetrieveTickets;
 import utils.Printer;
 import utils.Properties;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Paths;
+import java.text.ParseException;
+import java.util.List;
 
 public class DatasetCreator {
     private Git git;
     String projectName;
     String path;
+    private RetrieveTickets retrieveTickets;
     
     public DatasetCreator(String projectName) {
         this.projectName = projectName;
+        retrieveTickets = new RetrieveTickets(projectName);
     }
     
     /**
@@ -32,6 +40,10 @@ public class DatasetCreator {
         } catch (GitAPIException | IOException e) {
             Printer.printError("Could not initialize project: " + projectName + ": " + e.getMessage());
         }
+    }
+    
+    public List<Ticket> getTickets(List<Version> versionList) throws JSONException, IOException, ParseException {
+        return retrieveTickets.getTicketList(versionList);
     }
     
     /**

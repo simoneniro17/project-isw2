@@ -60,5 +60,19 @@ public class RetrieveVersions {
         return versionList;
     }
     
+    /**
+     * Finds the project version associated with the given date.
+     * @param date the date to search for
+     * @param versionList the list of all project versions
+     * @return the first version that is not earlier than the specified date, or null in case no version is found
+     */
+    public static Version findVersion(Date date, List<Version> versionList) {
+        for (Version version : versionList) {
+            if (!version.getEndDate().before(date) || version.getEndDate().equals(date)) {
+                return version;
+            }
+        }
+        return null;
+    }
 }
 
