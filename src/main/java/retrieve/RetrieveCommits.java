@@ -22,6 +22,16 @@ public class RetrieveCommits {
         this.commitList = new ArrayList<>();
     }
     
+    /**
+     * Retrieves commit information from a Git repository, including author details, commit date,
+     * associated version, touched classes, and buggy tickets.
+     * @param gitHub the Git object representing the repository from which to retrieve commits
+     * @param ticketList the list of available tickets
+     * @param versionList the list of project versions
+     * @return a list of Commit objects containing information about each retrieved commit
+     * @throws GitAPIException if an error occurs while accessing the Git repository
+     * @throws IOException if an I/O error occurs during the retrieval of commit information
+     */
     public List<Commit> getCommits (Git gitHub, List<Ticket> ticketList, List<Version> versionList) throws GitAPIException, IOException {
         this.gitHub = gitHub;
         
@@ -32,14 +42,14 @@ public class RetrieveCommits {
             String committerName = committer.getName();
             Date commitDate = committer.getWhen();
             
-            // retrieve version and if the commit is outside then skip to the next one
+            // retrieve associated version and if the commit is outside then skip to the next one
             Version version = RetrieveVersions.findVersion(commitDate, versionList);
             if (version == null)
                 continue;
             
             Commit commit = new Commit(revCommit, committerName, version, commitDate);
             
-            // retrieve touched classes and buggy tickets
+            // retrieve touched classes and buggy tickets associated with the commit
             List<String> touchedClassesList = getTouchedClasses(revCommit);
             List<Ticket> buggyTicketsList = getBuggyTickets(revCommit, ticketList);
             
@@ -53,6 +63,7 @@ public class RetrieveCommits {
         // ascending order comparing each commit date
         commitList.sort(Comparator.comparing(Commit::getDate));
         
+        // return the list of retrieved commits
         return commitList;
     }
     
