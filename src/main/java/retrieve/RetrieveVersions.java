@@ -26,8 +26,8 @@ public class RetrieveVersions {
         Pattern pattern = Pattern.compile(DELIMITER);
         
         try (BufferedReader reader = new BufferedReader(new FileReader(pathVersion))) {
-            // skip the header line
-            String header = reader.readLine();
+            // IGNORE the header line
+            reader.readLine();
             
             String line;
             Date date = null;
