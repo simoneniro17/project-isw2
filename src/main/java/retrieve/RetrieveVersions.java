@@ -19,35 +19,20 @@ public class RetrieveVersions {
     private static final String DELIMITER = ",";
     private static final String DATE_FORMAT = "yyyy-MM-dd'T'HH:mm";
     
-    private RetrieveVersions() {}
+    private RetrieveVersions() {
+    }
     
     public static List<Version> getVersions(String pathVersion) {
         List<Version> versionList = new ArrayList<>();
-        Pattern pattern = Pattern.compile(DELIMITER);
         
         try (BufferedReader reader = new BufferedReader(new FileReader(pathVersion))) {
             // IGNORE the header line
             String header = reader.readLine();
-            if(header == null) {
+            if (header == null) {
                 Printer.printError("No header");
             }
             
-            String line;
-            Date date = null;
-            while ((line = reader.readLine()) != null) {
-                String[] fields = pattern.split(line);
-                SimpleDateFormat formatter = new SimpleDateFormat(DATE_FORMAT);
-                
-                try {
-                    date = formatter.parse(fields[3]);
-                } catch (ParseException e) {
-                    Printer.printError("Error parsing date field in line: " + line);
-                    continue;
-                }
-                
-                Version version = new Version(Long.parseLong(fields[1]), fields[2], date);
-                versionList.add(version);
-            }
+            readVersionData(reader, versionList);
             
             // set the date
             Date versionDate = null;
@@ -66,8 +51,37 @@ public class RetrieveVersions {
     }
     
     /**
+     * Reads version data from the provided BufferedReader and populates the given list of Version objects.
+     *
+     * @param reader      the BufferedReader used to read version data from a file
+     * @param versionList the list of Version objects to populate with the read data
+     * @throws IOException if an I/O error occurs while reading data from the BufferedReader
+     */
+    private static void readVersionData(BufferedReader reader, List<Version> versionList) throws IOException {
+        Pattern pattern = Pattern.compile(DELIMITER);
+        
+        String line;
+        Date date = null;
+        while ((line = reader.readLine()) != null) {
+            String[] fields = pattern.split(line);
+            SimpleDateFormat formatter = new SimpleDateFormat(DATE_FORMAT);
+            
+            try {
+                date = formatter.parse(fields[3]);
+            } catch (ParseException e) {
+                Printer.printError("Error parsing date field in line: " + line);
+                continue;
+            }
+            
+            Version version = new Version(Long.parseLong(fields[1]), fields[2], date);
+            versionList.add(version);
+        }
+    }
+    
+    /**
      * Finds the project version associated with the given date.
-     * @param date the date to search for
+     *
+     * @param date        the date to search for
      * @param versionList the list of all project versions
      * @return the first version that is not earlier than the specified date, or null in case no version is found
      */
