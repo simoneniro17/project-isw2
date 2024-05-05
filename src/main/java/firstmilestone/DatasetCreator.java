@@ -121,7 +121,6 @@ public class DatasetCreator {
      * @throws IOException if an I/O error occurs
      */
     private Git openOrCreateRepository(File dir, String url) throws GitAPIException, IOException {
-        Git git;
         if (dir.list().length == 0) {
             Printer.printMessage("Cloning " + projectName + " repository in " + path);
             git = Git.cloneRepository().setURI(url).setDirectory(dir).call();

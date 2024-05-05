@@ -7,7 +7,6 @@ import utils.Printer;
 
 import java.io.FileWriter;
 import java.io.IOException;
-import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
@@ -37,7 +36,7 @@ public class RetrieveReleaseInfo {
         releases = new ArrayList<>();
         releaseNames = new HashMap<>();
         releaseID = new HashMap<>();
-        Integer i;
+        int i;
         
         // to get project information from JIRA API
         JSONObject jsonObject = readJsonFromUrl(JIRA_API_URL + projectName);
@@ -66,13 +65,6 @@ public class RetrieveReleaseInfo {
         // order releases by date
         Collections.sort(releases);
         
-//        // order releases by date
-//        Collections.sort(releases, new Comparator<LocalDateTime>() {
-//            public int compare(LocalDateTime o1, LocalDateTime o2) {
-//                return o1.compareTo(o2);
-//            }
-//        });
-        
         if (releases.size() < 6)
             return;
         
@@ -84,8 +76,8 @@ public class RetrieveReleaseInfo {
             fileWriter.append("Index,Version ID,Version Name,Date\n");
             
             for (i = 0; i < releases.size(); i++) {
-                Integer index = i + 1;
-                fileWriter.append(index.toString());
+                int index = i + 1;
+                fileWriter.append(Integer.toString(index));
                 fileWriter.append(",");
                 fileWriter.append(releaseID.get(releases.get(i)));
                 fileWriter.append(",");

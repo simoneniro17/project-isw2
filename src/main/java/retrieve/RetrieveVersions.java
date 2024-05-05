@@ -19,7 +19,9 @@ public class RetrieveVersions {
     private static final String DELIMITER = ",";
     private static final String DATE_FORMAT = "yyyy-MM-dd'T'HH:mm";
     
-    public static List<Version> GetVersions(String pathVersion) {
+    private RetrieveVersions() {}
+    
+    public static List<Version> getVersions(String pathVersion) {
         List<Version> versionList = new ArrayList<>();
         Pattern pattern = Pattern.compile(DELIMITER);
         

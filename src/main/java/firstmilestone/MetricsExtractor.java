@@ -74,7 +74,6 @@ public class MetricsExtractor {
             
             // change set size update for each touched class in the commit
             for (String touchedClass : commit.getTouchedClasses()) {
-                // Printer.printMessage("Added class " + touchedClass);
                 javaClassInstance = tempJCIList.get(tempMap.get(touchedClass));
                 javaClassInstance.updateChangeSetSize(commit.getTouchedClasses().size());
             }

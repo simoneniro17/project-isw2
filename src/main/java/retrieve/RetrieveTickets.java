@@ -79,7 +79,7 @@ public class RetrieveTickets {
                 Date resolutionDate = simpleDateFormat.parse(resolutionDateStr);
                 Date createdDate = simpleDateFormat.parse(createdDateStr);
                 
-                Version affectedVersion = getAffectedVersion(versions, versionList);
+                Version affectedVersion = getAffectedVersion(versions);
                 if(affectedVersion != null) {
                     affectedVersion.findNumberOfReleases(versionList);
                 }
@@ -100,11 +100,10 @@ public class RetrieveTickets {
     /**
      * Retrieves the affected version of a ticket.
      * @param versions the JSON array of versions associated with the ticket
-     * @param versionList the list of project versions
      * @return the affected version of the ticket, or null if not found
      * @throws ParseException if there is an error parsing dates
      */
-    private Version getAffectedVersion(JSONArray versions, List<Version> versionList) throws ParseException {
+    private Version getAffectedVersion(JSONArray versions) throws ParseException {
         if (!versions.isEmpty()) {
             JSONObject versionObj = versions.getJSONObject(0);
             

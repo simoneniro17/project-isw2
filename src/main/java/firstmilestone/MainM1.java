@@ -17,7 +17,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
-public class Main {
+public class MainM1 {
+    
+    private static final String THERE_ARE = "There are ";
     
     public static void main(String [] args) throws IOException, ParseException, GitAPIException {
         
@@ -57,23 +59,23 @@ public class Main {
         
         // get versions
         Printer.printMessage("Getting versions...");
-        versionList = RetrieveVersions.GetVersions(projectName + "VersionInfo.csv");
-        Printer.printMessage("There are " + versionList.size() + " versions\n");
+        versionList = RetrieveVersions.getVersions(projectName + "VersionInfo.csv");
+        Printer.printMessage(THERE_ARE + versionList.size() + " versions\n");
         
         // get buggy tickets
         Printer.printMessage("Getting buggy tickets...");
         ticketList = datasetCreator.getTickets(versionList);
-        Printer.printMessage("There are " + ticketList.size() + " buggy tickets\n");
+        Printer.printMessage(THERE_ARE + ticketList.size() + " buggy tickets\n");
         
         // get commits
         Printer.printMessage("Getting commits...");
         commitList = datasetCreator.getCommits(ticketList, versionList);
-        Printer.printMessage("There are " + commitList.size() + " commits\n");
+        Printer.printMessage(THERE_ARE + commitList.size() + " commits\n");
         
         // get java class instances
         Printer.printMessage("Getting Java class instances...");
         javaClassInstanceList = datasetCreator.getClassInstances(commitList, versionList, stringListMap);
-        Printer.printMessage("There are " + javaClassInstanceList.size() + " Java class instances\n");
+        Printer.printMessage(THERE_ARE + javaClassInstanceList.size() + " Java class instances\n");
         
         // what is the bugginess for each instance?
         Printer.printMessage("Setting bugginess for each instance...");
