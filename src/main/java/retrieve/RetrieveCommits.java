@@ -3,6 +3,7 @@ package retrieve;
 import model.Commit;
 import model.Ticket;
 import model.Version;
+import utils.Properties;
 
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
@@ -91,7 +92,7 @@ public class RetrieveCommits {
                     treeWalk.enterSubtree();
                 } else {
                     // if the current element is a java class, add its path to the list
-                    if (treeWalk.getPathString().endsWith(".java")) {
+                    if (treeWalk.getPathString().endsWith(Properties.FILE_EXTENSION)) {
                         touchedClasses.add(treeWalk.getPathString());
                     }
                 }
