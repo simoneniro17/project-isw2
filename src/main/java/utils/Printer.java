@@ -24,4 +24,12 @@ public class Printer {
     public static void printMessage(String message) {
         logger.log(Level.INFO, message);
     }
+    
+    /**
+     * Print a message on terminal
+     * @param message the message to print
+     */
+    public static void printCLI(String message) {
+        System.out.print(message);
+    }
 }

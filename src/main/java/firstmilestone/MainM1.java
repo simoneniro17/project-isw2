@@ -25,10 +25,10 @@ public class MainM1 {
         
         Scanner scanner = new Scanner(System.in);
         
-        System.out.println("From which project do you want to obtain the dataset?\n");
-        System.out.println("1. BOOKKEEPER");
-        System.out.println("2. STORM");
-        System.out.print("Insert the number corresponding to the project: ");
+        Printer.printCLI("\nFrom which project do you want to obtain the dataset?\n");
+        Printer.printCLI("1. BOOKKEEPER\n");
+        Printer.printCLI("2. STORM\n");
+        Printer.printCLI("Insert the number corresponding to the project: ");
         
         int scelta = scanner.nextInt();
         String projectName;
@@ -41,7 +41,7 @@ public class MainM1 {
                 projectName = Properties.CUSTOM_PROJECT;
                 break;
             default:
-                System.out.println("Invalid choice. Exit...");
+                Printer.printCLI("Invalid choice. Exit...");
                 return;
         }
         
