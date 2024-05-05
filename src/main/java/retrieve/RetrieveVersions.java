@@ -27,7 +27,7 @@ public class RetrieveVersions {
         
         try (BufferedReader reader = new BufferedReader(new FileReader(pathVersion))) {
             // skip the header line
-            reader.readLine();
+            String header = reader.readLine();
             
             String line;
             Date date = null;
