@@ -25,7 +25,8 @@ public class Ticket {
     /**
      * Sets the affected version of the ticket based on a given proportion and a list of versions.
      * The affected version is calculated based on the proportion between the opening and fixed versions.
-     * @param proportion the proportion used to calculate the position of the affected version
+     *
+     * @param proportion  the proportion used to calculate the position of the affected version
      * @param versionList the list of versions from which to select the affected version
      */
     public void setAffectedVersionByProportion(float proportion, List<Version> versionList) {
@@ -41,7 +42,8 @@ public class Ticket {
     /**
      * Calculates the new position of the affected version based on a given proportion
      * and the number of releases between the opening and fixed versions.
-     * @param proportion the proportion used to calculate the new position of the affected version
+     *
+     * @param proportion            the proportion used to calculate the new position of the affected version
      * @param openingVersionRelease the number of releases of the opening version
      * @return the new position of the affected version
      */

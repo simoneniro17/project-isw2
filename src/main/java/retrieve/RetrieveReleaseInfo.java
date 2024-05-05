@@ -23,12 +23,14 @@ public class RetrieveReleaseInfo {
     
     private static final String JIRA_API_URL = "https://issues.apache.org/jira/rest/api/2/project/";
     
-    private RetrieveReleaseInfo() {}
+    private RetrieveReleaseInfo() {
+    }
     
     /**
      * Retrieves release information for a given project.
+     *
      * @param projectName name of the project to retrieve release information for
-     * @throws IOException if an I/O error occurs while retrieving data from the API
+     * @throws IOException   if an I/O error occurs while retrieving data from the API
      * @throws JSONException if there is an issue parsing the JSON data
      */
     public static void retrieveReleaseInfo(String projectName) throws IOException, JSONException {
@@ -94,9 +96,10 @@ public class RetrieveReleaseInfo {
     
     /**
      * Adds a release to the list with its name and ID.
-     * @param dateString the string representation of the release date
+     *
+     * @param dateString  the string representation of the release date
      * @param releaseName the name of the release
-     * @param releaseId the ID of the release
+     * @param releaseId   the ID of the release
      */
     private static void addRelease(String dateString, String releaseName, String releaseId) {
         try {

@@ -25,14 +25,15 @@ public class RetrieveCommits {
     /**
      * Retrieves commit information from a Git repository, including author details, commit date,
      * associated version, touched classes, and buggy tickets.
-     * @param gitHub the Git object representing the repository from which to retrieve commits
-     * @param ticketList the list of available tickets
+     *
+     * @param gitHub      the Git object representing the repository from which to retrieve commits
+     * @param ticketList  the list of available tickets
      * @param versionList the list of project versions
      * @return a list of Commit objects containing information about each retrieved commit
      * @throws GitAPIException if an error occurs while accessing the Git repository
-     * @throws IOException if an I/O error occurs during the retrieval of commit information
+     * @throws IOException     if an I/O error occurs during the retrieval of commit information
      */
-    public List<Commit> getCommits (Git gitHub, List<Ticket> ticketList, List<Version> versionList) throws GitAPIException, IOException {
+    public List<Commit> getCommits(Git gitHub, List<Ticket> ticketList, List<Version> versionList) throws GitAPIException, IOException {
         this.gitHub = gitHub;
         
         Iterable<RevCommit> gitLog = gitHub.log().call();
@@ -69,6 +70,7 @@ public class RetrieveCommits {
     
     /**
      * Method to obtain classes touched by a commit.
+     *
      * @param revCommit commit to analyze
      * @return touched classes paths
      * @throws IOException if an I/O error occurs during the access to the repository
@@ -81,7 +83,7 @@ public class RetrieveCommits {
         
         try (TreeWalk treeWalk = new TreeWalk(gitHub.getRepository())) {
             treeWalk.reset(treeId);
-            while(treeWalk.next()) {
+            while (treeWalk.next()) {
                 
                 // StackOverflow response
                 // if the current element is a directory, then open it
@@ -100,7 +102,8 @@ public class RetrieveCommits {
     
     /**
      * Method to obtain a list of ticket associated to a commit.
-     * @param revCommit commit to analyze
+     *
+     * @param revCommit  commit to analyze
      * @param ticketList list of available tickets
      * @return list of ticket associated to the commit
      */
@@ -111,7 +114,7 @@ public class RetrieveCommits {
         String commitMessage = revCommit.getFullMessage();
         for (Ticket ticket : ticketList) {
             // if the ticket is mentioned the commit message add it to the buggy ticket list
-            if(commitMessage.contains(ticket.getKey()))
+            if (commitMessage.contains(ticket.getKey()))
                 buggyTicketsList.add(ticket);
         }
         

@@ -10,5 +10,6 @@ public class Properties {
     
     public static final String GIT_HUB_URL = "https://github.com/apache/";
     
-    private Properties() {}
+    private Properties() {
+    }
 }

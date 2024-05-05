@@ -15,7 +15,7 @@ public class RetrieveBuggy {
      *
      * @param javaClassInstanceList list of Java class instances
      * @param commitList            list of commits containing information
-     * @param instancesMap         a mapping of class names to their corresponding indexes in the instance list
+     * @param instancesMap          a mapping of class names to their corresponding indexes in the instance list
      */
     public void markBuggyInstances(List<JavaClassInstance> javaClassInstanceList, List<Commit> commitList, Map<String, List<Integer>> instancesMap) {
         for (Commit commit : commitList) {
@@ -36,7 +36,7 @@ public class RetrieveBuggy {
      * @param javaClassInstanceList list of Java class instances
      * @param ticket                the ticket containing affected and fixed versions
      * @param touchedClassesList    list of class names touched by the commit associated with the ticket
-     * @param instancesMap         a mapping of class names to their corresponding indexes in the instance list
+     * @param instancesMap          a mapping of class names to their corresponding indexes in the instance list
      */
     private void markInstanceAsBuggyForTicket(List<JavaClassInstance> javaClassInstanceList, Ticket ticket,
                                               List<String> touchedClassesList, Map<String, List<Integer>> instancesMap) {

@@ -73,7 +73,7 @@ public class Commit {
         this.touchedClasses = touchedClasses;
     }
     
-    public void addToTouchedClasses (String file) {
+    public void addToTouchedClasses(String file) {
         this.touchedClasses.add(file);
     }
     

@@ -7,10 +7,12 @@ public class Printer {
     
     static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     
-    private Printer() {}
+    private Printer() {
+    }
     
     /**
      * Print an error message
+     *
      * @param error the error message to print
      */
     public static void printError(String error) {
@@ -19,6 +21,7 @@ public class Printer {
     
     /**
      * Print an info message
+     *
      * @param message the info message to print
      */
     public static void printMessage(String message) {
@@ -27,6 +30,7 @@ public class Printer {
     
     /**
      * Print a message on terminal
+     *
      * @param message the message to print
      */
     public static void printCLI(String message) {

@@ -26,9 +26,10 @@ public class RetrieveTickets {
     
     /**
      * Retrieves the list of tickets for the project.
+     *
      * @param versionList the list of project versions
      * @return the list of tickets retrieved
-     * @throws IOException if an I/O error occurs
+     * @throws IOException    if an I/O error occurs
      * @throws ParseException if there is an error parsing dates
      */
     public List<Ticket> getTicketList(List<Version> versionList) throws IOException, ParseException {
@@ -41,8 +42,9 @@ public class RetrieveTickets {
     
     /**
      * Fetches the tickets' information from the JIRA API.
+     *
      * @param versionList the list of project versions
-     * @throws IOException if an I/O error occurs
+     * @throws IOException    if an I/O error occurs
      * @throws ParseException if there is an error parsing dates
      */
     private void fetchTicketsId(List<Version> versionList) throws IOException, ParseException {
@@ -80,7 +82,7 @@ public class RetrieveTickets {
                 Date createdDate = simpleDateFormat.parse(createdDateStr);
                 
                 Version affectedVersion = getAffectedVersion(versions);
-                if(affectedVersion != null) {
+                if (affectedVersion != null) {
                     affectedVersion.findNumberOfReleases(versionList);
                 }
                 
@@ -99,6 +101,7 @@ public class RetrieveTickets {
     
     /**
      * Retrieves the affected version of a ticket.
+     *
      * @param versions the JSON array of versions associated with the ticket
      * @return the affected version of the ticket, or null if not found
      * @throws ParseException if there is an error parsing dates
@@ -120,6 +123,7 @@ public class RetrieveTickets {
     
     /**
      * Filters out unreliable tickets where the opening version is after the affected version.
+     *
      * @param ticketList the list of tickets to filter
      */
     private void filterReliableTickets(List<Ticket> ticketList) {
