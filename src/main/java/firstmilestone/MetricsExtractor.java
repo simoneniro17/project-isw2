@@ -32,9 +32,9 @@ public class MetricsExtractor {
     /**
      * Extracts class metrics from the given Git repository, commit list, version list, and class name mapping.
      *
-     * @param git           the Git repository
-     * @param commitList    the list of commits
-     * @param versionList   the list of versions
+     * @param git          the Git repository
+     * @param commitList   the list of commits
+     * @param versionList  the list of versions
      * @param instancesMap a mapping of class names to their corresponding indexes in the instance list
      * @return the list of Java class instances with extracted metrics
      * @throws IOException if an I/O error occurs during the extraction process
@@ -88,13 +88,13 @@ public class MetricsExtractor {
     /**
      * Manages file changes for a commit, updating Java class instances accordingly.
      *
-     * @param commit                 the current commit
-     * @param previousCommit        the previous commit
-     * @param tempJCIList  the list of Java class instances
-     * @param tempMap       a mapping of file names to their corresponding indexes in the instance list
-     * @param version                the current version
-     * @param author                 the author of the commit
-     * @param isFixCommit            indicates if the commit is a fix commit
+     * @param commit         the current commit
+     * @param previousCommit the previous commit
+     * @param tempJCIList    the list of Java class instances
+     * @param tempMap        a mapping of file names to their corresponding indexes in the instance list
+     * @param version        the current version
+     * @param author         the author of the commit
+     * @param isFixCommit    indicates if the commit is a fix commit
      * @throws IOException if an I/O error occurs during file extraction
      */
     private void manageFileChanges(Commit commit, RevCommit previousCommit, ArrayList<JavaClassInstance> tempJCIList,
@@ -146,8 +146,8 @@ public class MetricsExtractor {
     /**
      * Computes the difference between two commits and returns a list of changed files.
      *
-     * @param oldCommit  the old commit (can be null if comparing to an initial commit)
-     * @param newCommit  the new commit
+     * @param oldCommit the old commit (can be null if comparing to an initial commit)
+     * @param newCommit the new commit
      * @return a list of DiffEntry objects representing the changes between the commits
      * @throws IOException if an I/O error occurs during the diff computation
      */
@@ -209,9 +209,9 @@ public class MetricsExtractor {
     /**
      * Updates the list of Java class instances with metrics based on commit information.
      *
-     * @param instancesMap a mapping of class names to their corresponding indexes in the instance list
+     * @param instancesMap     a mapping of class names to their corresponding indexes in the instance list
      * @param temporaryJCIList temporary list of Java class instances
-     * @param tempMap a mapping of class names to their corresponding indexes in the instance list
+     * @param tempMap          a mapping of class names to their corresponding indexes in the instance list
      */
     private void updateJavaClassInstances(Map<String, List<Integer>> instancesMap, List<JavaClassInstance> temporaryJCIList,
                                           Map<String, Integer> tempMap) {

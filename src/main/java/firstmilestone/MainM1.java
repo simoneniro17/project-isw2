@@ -21,7 +21,7 @@ public class MainM1 {
     
     private static final String THERE_ARE = "There are ";
     
-    public static void main(String [] args) throws IOException, ParseException, GitAPIException {
+    public static void main(String[] args) throws IOException, ParseException, GitAPIException {
         
         Scanner scanner = new Scanner(System.in);
         

@@ -7,7 +7,8 @@ import java.util.List;
 
 public class Proportion {
     
-    private Proportion() {}
+    private Proportion() {
+    }
     
     public static void calculateProportion(List<Version> versionList, List<Ticket> ticketList) {
         float totalAffectedVersions = 0;

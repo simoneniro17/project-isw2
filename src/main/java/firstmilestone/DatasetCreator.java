@@ -114,11 +114,12 @@ public class DatasetCreator {
     
     /**
      * Opens an existing repository or clones it if it doesn't exist.
+     *
      * @param dir the directory of the repository
      * @param url the URL of the repository
      * @return the Git object representing the repository
      * @throws GitAPIException if an error occurs while interacting with Git
-     * @throws IOException if an I/O error occurs
+     * @throws IOException     if an I/O error occurs
      */
     private Git openOrCreateRepository(File dir, String url) throws GitAPIException, IOException {
         if (dir.list().length == 0) {
