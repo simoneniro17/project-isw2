@@ -34,6 +34,9 @@ public class MainM2 {
                 return;
         }
         
+        // dataset from csv to arff in order to use weka
+        Printer.printMessage("Converting from CSV to ARFF...\n");
         CSV2Arff.csvToArffConverter(sourcePathname, destinationPathname);
+        Printer.printMessage("Conversion completed!\n");
     }
 }
