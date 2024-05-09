@@ -4,6 +4,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import utils.Printer;
+import utils.Properties;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -74,7 +75,7 @@ public class RetrieveReleaseInfo {
         String outputName = projectName + "VersionInfo.csv";
         
         // release information to CSV file
-        try (FileWriter fileWriter = new FileWriter(outputName)) {
+        try (FileWriter fileWriter = new FileWriter(Properties.OUTPUT_DIRECTORY + outputName)) {
             fileWriter.append("Index,Version ID,Version Name,Date\n");
             
             for (i = 0; i < releases.size(); i++) {

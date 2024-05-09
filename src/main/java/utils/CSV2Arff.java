@@ -9,7 +9,7 @@ import java.io.IOException;
 
 public class CSV2Arff {
     
-    private CSV2Arff() {};
+    private CSV2Arff() {}
     
     /**
      * Convert a CSV file to ARFF format.

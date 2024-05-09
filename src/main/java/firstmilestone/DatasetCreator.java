@@ -79,7 +79,7 @@ public class DatasetCreator {
      * @param javaClassInstanceList the list of Java class instances to extract data from
      */
     public void populateCSV(List<JavaClassInstance> javaClassInstanceList) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(projectName + Properties.DATASET_FILE))) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(Properties.OUTPUT_DIRECTORY + projectName + Properties.DATASET_FILE))) {
             // header line
             writer.write("Version,Name,Size,LOCTouched,NR,NFix,NAuth,LOCAdded,Churn,AvgChurn,ChangeSetSize,Age,isBuggy\n");
             

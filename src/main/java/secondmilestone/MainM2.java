@@ -22,12 +22,12 @@ public class MainM2 {
         
         switch (choice) {
             case 1:
-                sourcePathname = Properties.PROJECT_PATH + "/BOOKKEEPERdataset.csv";
-                destinationPathname = Properties.PROJECT_PATH + "/BOOKKEEPERdataset.arff";
+                sourcePathname = Properties.OUTPUT_DIRECTORY + "/BOOKKEEPERdataset.csv";
+                destinationPathname = Properties.OUTPUT_DIRECTORY + "/BOOKKEEPERdataset.arff";
                 break;
             case 2:
-                sourcePathname = Properties.PROJECT_PATH +  "/STORMdataset.csv";
-                destinationPathname = Properties.PROJECT_PATH +  "/STORMdataset.arff";
+                sourcePathname = Properties.OUTPUT_DIRECTORY +  "/STORMdataset.csv";
+                destinationPathname = Properties.OUTPUT_DIRECTORY +  "/STORMdataset.arff";
                 break;
             default:
                 Printer.printCLI("Invalid choice. Exit...");

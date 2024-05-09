@@ -30,10 +30,10 @@ public class MainM1 {
         Printer.printCLI("2. " + Properties.CUSTOM_PROJECT + "\n");
         Printer.printCLI("Insert the number corresponding to the project: ");
         
-        int scelta = scanner.nextInt();
+        int choice = scanner.nextInt();
         String projectName;
         
-        switch (scelta) {
+        switch (choice) {
             case 1:
                 projectName = Properties.COMMON_PROJECT;
                 break;
@@ -59,7 +59,7 @@ public class MainM1 {
         
         // get versions
         Printer.printMessage("Getting versions...");
-        versionList = RetrieveVersions.getVersions(projectName + "VersionInfo.csv");
+        versionList = RetrieveVersions.getVersions(Properties.OUTPUT_DIRECTORY + projectName + "VersionInfo.csv");
         Printer.printMessage(THERE_ARE + versionList.size() + " versions\n");
         
         // get buggy tickets
