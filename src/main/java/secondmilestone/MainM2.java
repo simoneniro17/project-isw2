@@ -16,21 +16,24 @@ public class MainM2 {
         Printer.printCLI("2. STORM\n");
         Printer.printCLI("Insert the number corresponding to the project: ");
         
-        int scelta = scanner.nextInt();
-        String pathname;
+        int choice = scanner.nextInt();
+        String sourcePathname;
+        String destinationPathname;
         
-        switch (scelta) {
+        switch (choice) {
             case 1:
-                pathname = "C:/Users/simon/IdeaProjects/project-isw2/BOOKKEEPERdataset.csv";
+                sourcePathname = Properties.PROJECT_PATH + "/BOOKKEEPERdataset.csv";
+                destinationPathname = Properties.PROJECT_PATH + "/BOOKKEEPERdataset.arff";
                 break;
             case 2:
-                pathname = "C:/Users/simon/IdeaProjects/project-isw2/STORMdataset.csv";
+                sourcePathname = Properties.PROJECT_PATH +  "/STORMdataset.csv";
+                destinationPathname = Properties.PROJECT_PATH +  "/STORMdataset.arff";
                 break;
             default:
                 Printer.printCLI("Invalid choice. Exit...");
                 return;
         }
         
-        CSV2Arff.csvToArffConverter(pathname);
+        CSV2Arff.csvToArffConverter(sourcePathname, destinationPathname);
     }
 }

@@ -26,8 +26,8 @@ public class MainM1 {
         Scanner scanner = new Scanner(System.in);
         
         Printer.printCLI("\nFrom which project do you want to obtain the dataset?\n");
-        Printer.printCLI("1. BOOKKEEPER\n");
-        Printer.printCLI("2. STORM\n");
+        Printer.printCLI("1. " + Properties.COMMON_PROJECT + "\n");
+        Printer.printCLI("2. " + Properties.CUSTOM_PROJECT + "\n");
         Printer.printCLI("Insert the number corresponding to the project: ");
         
         int scelta = scanner.nextInt();
