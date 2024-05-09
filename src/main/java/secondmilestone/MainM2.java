@@ -12,8 +12,8 @@ public class MainM2 {
         Scanner scanner = new Scanner(System.in);
         
         Printer.printCLI("\nFrom which project do you want to obtain the evaluation?\n");
-        Printer.printCLI("1. BOOKKEEPER\n");
-        Printer.printCLI("2. STORM\n");
+        Printer.printCLI("1. " + Properties.COMMON_PROJECT + "\n");
+        Printer.printCLI("2. " + Properties.CUSTOM_PROJECT + "\n");
         Printer.printCLI("Insert the number corresponding to the project: ");
         
         int choice = scanner.nextInt();
@@ -22,12 +22,12 @@ public class MainM2 {
         
         switch (choice) {
             case 1:
-                sourcePathname = Properties.OUTPUT_DIRECTORY + "/BOOKKEEPERdataset.csv";
-                destinationPathname = Properties.OUTPUT_DIRECTORY + "/BOOKKEEPERdataset.arff";
+                sourcePathname = Properties.OUTPUT_DIRECTORY + Properties.COMMON_PROJECT + Properties.DATASET_FILE;
+                destinationPathname = Properties.OUTPUT_DIRECTORY + Properties.COMMON_PROJECT + Properties.DATASET_FILE_ARFF;
                 break;
             case 2:
-                sourcePathname = Properties.OUTPUT_DIRECTORY +  "/STORMdataset.csv";
-                destinationPathname = Properties.OUTPUT_DIRECTORY +  "/STORMdataset.arff";
+                sourcePathname = Properties.OUTPUT_DIRECTORY + Properties.CUSTOM_PROJECT + Properties.DATASET_FILE;
+                destinationPathname = Properties.OUTPUT_DIRECTORY +  Properties.CUSTOM_PROJECT + Properties.DATASET_FILE_ARFF;
                 break;
             default:
                 Printer.printCLI("Invalid choice. Exit...");

@@ -9,9 +9,9 @@ import weka.core.converters.ConverterUtils.DataSource;
 public class TestWekaEasy{
     public static void main(String[] args) throws Exception{
         //load datasets
-        DataSource source1 = new DataSource("C://Users//simon//IdeaProjects//project-isw2//BOOKKEEPERdataset.arff");
+        DataSource source1 = new DataSource("C://Users//simon//IdeaProjects//project-isw2//src//main//java//outputs//BOOKKEEPERdataset.arff");
         Instances training = source1.getDataSet();
-        DataSource source2 = new DataSource("C://Users//simon//IdeaProjects//project-isw2//BOOKKEEPERdataset.arff");
+        DataSource source2 = new DataSource("C://Users//simon//IdeaProjects//project-isw2//src//main//java//outputs//BOOKKEEPERdataset.arff");
         Instances testing = source2.getDataSet();
         
         int numAttr = training.numAttributes();
@@ -26,10 +26,7 @@ public class TestWekaEasy{
         
         eval.evaluateModel(classifier, testing);
         
-        Printer.printCLI("AUC = " + eval.areaUnderROC(1));
-        Printer.printCLI("kappa = "+eval.kappa());
-        
-        
+        Printer.printCLI("AUC = " + eval.areaUnderROC(1) + "\n");
+        Printer.printCLI("kappa = "+eval.kappa() + "\n");
     }
 }
-
