@@ -1,8 +1,8 @@
 package model;
 
 // Profile for ML evaluation defined by Specifiche Falessi at 09/05/2024
-public class Profile {
-    private Profile() {}
+public class MLProfile {
+    private MLProfile() {}
     
     public enum CLASSIFIER {
         RANDOM_FOREST,
