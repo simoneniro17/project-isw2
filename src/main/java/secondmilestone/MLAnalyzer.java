@@ -16,11 +16,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MLAnalyzer {
-    private String projectName;
-    private static String datasetArff;
+    private final String datasetArff;
     
     public MLAnalyzer(String projectName) {
-        this.projectName = projectName;
         datasetArff = Properties.OUTPUT_DIRECTORY + projectName + Properties.DATASET_FILE_ARFF;
     }
     
