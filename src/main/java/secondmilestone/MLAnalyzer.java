@@ -36,36 +36,42 @@ public class MLAnalyzer {
         // feature selection iteration
         for (MLProfile.FEATURE_SELECTION featureSelection : MLProfile.FEATURE_SELECTION.values()) {
             
-            // walk forward
-            for (int i = 1; i < numberOfVersions; i++) {
-                Instances training = dataFilter.getTrainingSet(dataset, i, numberOfVersions);
-                Instances testing = dataFilter.getTestingSet(dataset, i);
+            // sampling iteration
+            for (MLProfile.BALANCING balancing : MLProfile.BALANCING.values()) {
                 
-                training.deleteAttributeAt(0);
-                testing.deleteAttributeAt(0);
-                training.setClassIndex(numberOfAttributes - 2);
-                testing.setClassIndex(numberOfAttributes - 2);
-                
-                dataFilter.trainingData = training;
-                dataFilter.testingData = testing;
-                
-                // apply feature selection
-                dataFilter.applyFeatureSelection(featureSelection);
-                
-                training = dataFilter.trainingData;
-                testing = dataFilter.testingData;
-                
-                // using classifiers
-                for (MLProfile.CLASSIFIER classifier : MLProfile.CLASSIFIER.values()) {
-                    evaluation = executeAnalysis(training, testing, classifier);
+                // walk forward
+                for (int i = 1; i < numberOfVersions; i++) {
+                    Instances training = dataFilter.getTrainingSet(dataset, i, numberOfVersions);
+                    Instances testing = dataFilter.getTestingSet(dataset, i);
                     
-                    Printer.printCLI("(" + i + ") Classificatore: " + classifier + "\t\tFeature Selection: " + featureSelection);
-                    Printer.printCLI("\nAccuratezza: " + evaluation.pctCorrect() + "%");
-                    Printer.printCLI("\nPrecision: " + evaluation.precision(1));
-                    Printer.printCLI("\nRecall: " + evaluation.recall(1) + "\n\n");
+                    training.deleteAttributeAt(0);
+                    testing.deleteAttributeAt(0);
+                    training.setClassIndex(numberOfAttributes - 2);
+                    testing.setClassIndex(numberOfAttributes - 2);
                     
+                    dataFilter.trainingData = training;
+                    dataFilter.testingData = testing;
                     
-                    modelEvaluations.add(new MLModelEval(classifier, featureSelection, evaluation));
+                    // apply feature selection and sampling
+                    dataFilter.applyFeatureSelection(featureSelection);
+                    dataFilter.applySampling(balancing);
+                    
+                    training = dataFilter.trainingData;
+                    testing = dataFilter.testingData;
+                    
+                    // using classifiers
+                    for (MLProfile.CLASSIFIER classifier : MLProfile.CLASSIFIER.values()) {
+                        evaluation = executeAnalysis(training, testing, classifier);
+                        
+                        Printer.printCLI("(" + i + ") Classificatore: " + classifier + "\t\tFeature Selection: " + featureSelection + "\t\tBalancing: " + balancing);
+                        Printer.printCLI("\nAccuratezza: " + evaluation.pctCorrect() + "%");
+                        Printer.printCLI("\nPrecision: " + evaluation.precision(1));
+                        Printer.printCLI("\nRecall: " + evaluation.recall(1));
+                        Printer.printCLI("\nAUC: " + evaluation.areaUnderROC(1));
+                        Printer.printCLI("\nKappa: " + evaluation.kappa() + "\n\n");
+                        
+                        modelEvaluations.add(new MLModelEval(classifier, featureSelection, balancing, evaluation));
+                    }
                 }
             }
         }
