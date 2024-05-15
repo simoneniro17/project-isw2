@@ -27,13 +27,13 @@ public class Version {
     }
     
     public void findNumberOfReleases(List<Version> versionList) {
-        int releaseCount = 0;
+        int releaseCount = 1;
         for (Version version : versionList) {
-            if (version.getId() == this.id) {
-                releaseCount++;
-            }
+            if (version.getId() == this.id)
+                this.numberOfReleases = releaseCount;
+            
+            releaseCount++;
         }
-        this.numberOfReleases = releaseCount;
     }
     
     public long getId() {
