@@ -16,19 +16,6 @@ public class MLModelEval {
         this.evaluation = evaluation;
     }
     
-    public MLModelEval(MLProfile.CLASSIFIER classifier, MLProfile.FEATURE_SELECTION featureSelection, Evaluation evaluation) {
-        this.classifier = classifier;
-        this.featureSelection = featureSelection;
-        this.evaluation = evaluation;
-    }
-    
-    public MLModelEval(MLProfile.CLASSIFIER classifier, MLProfile.FEATURE_SELECTION featureSelection, MLProfile.BALANCING balancing, Evaluation evaluation) {
-        this.classifier = classifier;
-        this.featureSelection = featureSelection;
-        this.balancing = balancing;
-        this.evaluation = evaluation;
-    }
-    
     public MLProfile.CLASSIFIER getClassifier() {
         return classifier;
     }

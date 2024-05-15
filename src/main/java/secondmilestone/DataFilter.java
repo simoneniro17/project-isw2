@@ -39,9 +39,7 @@ public class DataFilter {
     }
     
     public void applySampling(MLProfile.BALANCING balancing) throws Exception {
-        if (balancing.equals(MLProfile.BALANCING.NO_SAMPLING))
-            return;
-        else if (balancing.equals(MLProfile.BALANCING.OVERSAMPLING)) {
+        if (balancing.equals(MLProfile.BALANCING.OVERSAMPLING)) {
             Resample resample = new Resample();
             resample.setInputFormat(trainingData);
             
@@ -65,7 +63,7 @@ public class DataFilter {
     noReplacement=false, biasToUniformClass=1.0, and sampleSizePercent=Y, Y = 100 * (majority –minority)/minority.
     Example for the diabetes data: weka.filters.supervised.instance.Resample-B 1.0 -Z 130.3
      */
-    private double calculateMajorityClassPercentage() throws Exception {
+    private double calculateMajorityClassPercentage() {
         int numberOfBuggy = 0;
         String buggy;
         
