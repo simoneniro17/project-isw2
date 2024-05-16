@@ -110,7 +110,7 @@ public class DataFilter {
         }
         
         // percentage of the majority class
-        double percentage = (100 * 2 * numberOfBuggy) / dataset.size();
+        double percentage = (100.0 * 2 * numberOfBuggy) / dataset.size();
         if (percentage >= 50)
             return percentage;
         else

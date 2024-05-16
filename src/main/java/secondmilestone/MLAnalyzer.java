@@ -14,17 +14,22 @@ import weka.classifiers.trees.RandomForest;
 import weka.core.Instances;
 import weka.core.converters.ConverterUtils.DataSource;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class MLAnalyzer {
+    private final String projectName;
     private final String datasetArff;
     
     public MLAnalyzer(String projectName) {
+        this.projectName = projectName;
         datasetArff = Properties.OUTPUT_DIRECTORY + projectName + Properties.DATASET_FILE_ARFF;
     }
     
-    public void loadDataset() throws Exception {
+    public void performAnalysis() throws Exception {
         DataSource source = new DataSource(datasetArff);
         Instances dataset = source.getDataSet();
         dataset.deleteStringAttributes();
@@ -35,13 +40,13 @@ public class MLAnalyzer {
         List<MLModelEval> modelEvaluations = new ArrayList<>();
         Evaluation evaluation;
         
-        // feature selection iteration
+        // feature selection methods iteration
         for (MLProfile.FEATURE_SELECTION featureSelection : MLProfile.FEATURE_SELECTION.values()) {
             
-            // sampling iteration
+            // sampling methods iteration
             for (MLProfile.BALANCING balancing : MLProfile.BALANCING.values()) {
                 
-                // cost sensitive iteration
+                // cost sensitive methods iteration
                 for (MLProfile.SENSITIVITY sensitivity : MLProfile.SENSITIVITY.values()) {
                     
                     // walk forward
@@ -67,25 +72,27 @@ public class MLAnalyzer {
                         // using classifiers
                         for (MLProfile.CLASSIFIER classifier : MLProfile.CLASSIFIER.values()) {
                             evaluation = executeAnalysis(training, testing, classifier, sensitivity);
-                            
-                            Printer.printCLI("(" + i + ") Classificatore: " + classifier
-                                    + "\t\tFeature Selection: " + featureSelection
-                                    + "\t\tBalancing: " + balancing
-                                    + "\t\tSensitivity: " + sensitivity);
-                            Printer.printCLI("\nAccuratezza: " + evaluation.pctCorrect() + "%");
-                            Printer.printCLI("\nPrecision: " + evaluation.precision(1));
-                            Printer.printCLI("\nRecall: " + evaluation.recall(1));
-                            Printer.printCLI("\nAUC: " + evaluation.areaUnderROC(1));
-                            Printer.printCLI("\nKappa: " + evaluation.kappa() + "\n\n");
-                            
                             modelEvaluations.add(new MLModelEval(classifier, featureSelection, balancing, sensitivity, evaluation));
                         }
                     }
                 }
             }
         }
+        
+        writeResultsToCSV(modelEvaluations, numberOfVersions);
+        
     }
     
+    /**
+     * Executes the analysis using the specified classifier and sensitivity.
+     *
+     * @param trainingSet the training set
+     * @param testingSet  the testing set
+     * @param classifier  the classifier to use
+     * @param sensitivity the sensitivity setting
+     * @return the evaluation results
+     * @throws Exception if an error occurs during the analysis
+     */
     private static Evaluation executeAnalysis(Instances trainingSet, Instances testingSet, MLProfile.CLASSIFIER classifier, MLProfile.SENSITIVITY sensitivity) throws Exception {
         Classifier cls;
         
@@ -97,10 +104,6 @@ public class MLAnalyzer {
             cls = new IBk();
         
         Evaluation evaluation;
-        CostSensitiveClassifier costSensitiveClassifier = new CostSensitiveClassifier();
-        CostMatrix costMatrix = createCostMatrix(1.0, 10.0);
-        costSensitiveClassifier.setClassifier(cls);
-        costSensitiveClassifier.setCostMatrix(costMatrix);
         
         if (sensitivity.equals(MLProfile.SENSITIVITY.NO_COST_SENSITIVE)) {
             // classifier training
@@ -110,7 +113,12 @@ public class MLAnalyzer {
             evaluation = new Evaluation(testingSet);
             evaluation.evaluateModel(cls, testingSet);
         } else {
-            //TODO FARLO ANCHE CON ALTRA SENSITIVITY
+            CostSensitiveClassifier costSensitiveClassifier = new CostSensitiveClassifier();
+            CostMatrix costMatrix = createCostMatrix(1.0, 10.0);
+            costSensitiveClassifier.setClassifier(cls);
+            costSensitiveClassifier.setCostMatrix(costMatrix);
+            
+            // in case of "sensitive learning", the equals() method will return false
             costSensitiveClassifier.setMinimizeExpectedCost(sensitivity.equals(MLProfile.SENSITIVITY.SENSITIVE_THRESHOLD));
             costSensitiveClassifier.buildClassifier(trainingSet);
             
@@ -121,7 +129,14 @@ public class MLAnalyzer {
         return evaluation;
     }
     
-    private static CostMatrix createCostMatrix(double weightFalsePositive, double weightFalseNegative) {
+    /**
+     * Creates a cost matrix.
+     *
+     * @param weightFalsePositive the weight for false positives
+     * @param weightFalseNegative the weight for false negatives
+     * @return the cost matrix
+     */
+     private static CostMatrix createCostMatrix(double weightFalsePositive, double weightFalseNegative) {
         CostMatrix costMatrix = new CostMatrix(2);
         costMatrix.setCell(0, 0, 0.0);
         costMatrix.setCell(1, 0, weightFalsePositive);
@@ -130,15 +145,52 @@ public class MLAnalyzer {
         return costMatrix;
     }
     
-    /*
-    CostSensitiveClassifierc1 = new CostSensitiveClassifier();
-    c1.setClassifier(new J48());
-    c1.setCostMatrix( createCostMatrix(CFP, CFN));
-    c1.buildClassifier(data);
-    Evaluation ec1 = new Evaluation(data,c1.getCostMatrix());
-    ec1.evaluateModel(c1, data);
+    /**
+     * Writes the evaluation results to a CSV file.
+     *
+     * @param modelEvaluations the list of model evaluations
+     * @param numVersions the number of versions in the dataset
      */
-    
-    //private static void writeResultsToCSV
-
+    private void writeResultsToCSV(List<MLModelEval> modelEvaluations, int numVersions) {
+        String outFileName = Properties.OUTPUT_DIRECTORY + projectName + "results.csv";
+        
+        try (FileWriter fileWriter = new FileWriter(outFileName)) {
+            fileWriter.append("Dataset,#TrainingRelease,Classifier,Feature Selection,Balancing,Sensitivity,Accuracy,Precision,Recall,AUC,Kappa\n");
+            int numberOfTrainingRelease = 1;
+            int counter = 0;
+            
+            for (MLModelEval eval : modelEvaluations) {
+                // reset training release after iterating over classifiers (3 is the number of classifiers)
+                if (counter >= 3) {
+                    if (numberOfTrainingRelease >= numVersions - 1)
+                        numberOfTrainingRelease = 1;
+                    else
+                        numberOfTrainingRelease++;
+                    
+                    counter = 0;
+                }
+                
+                String classifier = eval.getClassifier().toString();
+                String featureSelection = eval.getFeatureSelection().toString();
+                String balancing = eval.getBalancing().toString();
+                String sensitivity = eval.getSensitivity().toString();
+                
+                Evaluation evaluation = eval.getEvaluation();
+                String accuracy = String.format(Locale.US, "%.3f", evaluation.pctCorrect());
+                String precision = String.format(Locale.US, "%.3f", evaluation.precision(1));
+                String recall = String.format(Locale.US, "%.3f", evaluation.recall(1));
+                String auc = String.format(Locale.US, "%.3f", evaluation.areaUnderROC(1));
+                String kappa = String.format(Locale.US, "%.3f", evaluation.kappa());
+                
+                String line = String.format("%s,%d,%s,%s,%s,%s,%s,%s,%s,%s,%s\n", projectName, numberOfTrainingRelease,
+                        classifier, featureSelection, balancing, sensitivity, accuracy, precision, recall, auc, kappa);
+                
+                if(!precision.equals("NaN"))
+                    fileWriter.append(line);
+                counter++;
+            }
+        } catch (IOException e) {
+            Printer.printError("Error in writing results in CSV");
+        }
+    }
 }

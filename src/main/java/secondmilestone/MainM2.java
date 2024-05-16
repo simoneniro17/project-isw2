@@ -43,7 +43,7 @@ public class MainM2 {
         
         // model evaluation on the dataset generated before
         Printer.printMessage("Evaluating...\n");
-        mlAnalyzer.loadDataset();
+        mlAnalyzer.performAnalysis();
         Printer.printMessage("Evaluation completed!\n");
     }
 }
