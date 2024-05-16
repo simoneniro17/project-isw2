@@ -15,9 +15,6 @@ import weka.filters.unsupervised.attribute.Remove;
 import weka.filters.unsupervised.instance.RemoveWithValues;
 
 import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
-import java.util.Locale;
-
 
 public class DataFilter {
     Instances trainingData;
@@ -68,7 +65,7 @@ public class DataFilter {
                 (Z) oversampling with substitution (instances repetition)
                 Percentage value calculated based on the majority class percentage compared to the minority class
              */
-            DecimalFormat decimalFormat = new DecimalFormat("#.##", DecimalFormatSymbols.getInstance(Locale.getDefault()));
+            DecimalFormat decimalFormat = new DecimalFormat("#.##");
             String options = String.format("%s %s", "-B 1.0 -Z", decimalFormat.format(calculateMajorityClassPercentage()));
             resample.setOptions(Utils.splitOptions(options));
             
