@@ -113,7 +113,7 @@ public class DataFilter {
         if (percentage >= 50)
             return percentage;
         else
-            return 100 - percentage;
+            return 100.0 - percentage;
     }
     
     /**
