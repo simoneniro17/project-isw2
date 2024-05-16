@@ -79,8 +79,10 @@ public class MLAnalyzer {
             }
         }
         
+        Printer.printMessage("Evaluation completed!\n");
+        Printer.printMessage("Writing results to CSV...");
         writeResultsToCSV(modelEvaluations, numberOfVersions);
-        
+        Printer.printMessage("Results written!\n");
     }
     
     /**
@@ -136,7 +138,7 @@ public class MLAnalyzer {
      * @param weightFalseNegative the weight for false negatives
      * @return the cost matrix
      */
-     private static CostMatrix createCostMatrix(double weightFalsePositive, double weightFalseNegative) {
+    private static CostMatrix createCostMatrix(double weightFalsePositive, double weightFalseNegative) {
         CostMatrix costMatrix = new CostMatrix(2);
         costMatrix.setCell(0, 0, 0.0);
         costMatrix.setCell(1, 0, weightFalsePositive);
@@ -149,7 +151,7 @@ public class MLAnalyzer {
      * Writes the evaluation results to a CSV file.
      *
      * @param modelEvaluations the list of model evaluations
-     * @param numVersions the number of versions in the dataset
+     * @param numVersions      the number of versions in the dataset
      */
     private void writeResultsToCSV(List<MLModelEval> modelEvaluations, int numVersions) {
         String outFileName = Properties.OUTPUT_DIRECTORY + projectName + "results.csv";
@@ -185,7 +187,7 @@ public class MLAnalyzer {
                 String line = String.format("%s,%d,%s,%s,%s,%s,%s,%s,%s,%s,%s%n", projectName, numberOfTrainingRelease,
                         classifier, featureSelection, balancing, sensitivity, accuracy, precision, recall, auc, kappa);
                 
-                if(!precision.equals("NaN"))
+                if (!precision.equals("NaN"))
                     fileWriter.append(line);
                 counter++;
             }
