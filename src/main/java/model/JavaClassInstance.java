@@ -166,10 +166,6 @@ public class JavaClassInstance {
         return name;
     }
     
-    public void setName(String name) {
-        this.name = name;
-    }
-    
     public Version getVersion() {
         return version;
     }
@@ -182,96 +178,48 @@ public class JavaClassInstance {
         return creationDate;
     }
     
-    public void setCreationDate(Date creationDate) {
-        this.creationDate = creationDate;
-    }
-    
     public int getSize() {
         return size;
-    }
-    
-    public void setSize(int size) {
-        this.size = size;
     }
     
     public int getLocTouched() {
         return locTouched;
     }
     
-    public void setLocTouched(int locTouched) {
-        this.locTouched = locTouched;
-    }
-    
     public int getnR() {
         return nR;
-    }
-    
-    public void setnR(int nR) {
-        this.nR = nR;
     }
     
     public int getnFix() {
         return nFix;
     }
     
-    public void setnFix(int nFix) {
-        this.nFix = nFix;
-    }
-    
     public int getnAuth() {
         return nAuth;
-    }
-    
-    public void setnAuth(int nAuth) {
-        this.nAuth = nAuth;
     }
     
     public List<String> getAuthors() {
         return authors;
     }
     
-    public void setAuthors(List<String> authors) {
-        this.authors = authors;
-    }
-    
     public int getLocAdded() {
         return locAdded;
-    }
-    
-    public void setLocAdded(int locAdded) {
-        this.locAdded = locAdded;
     }
     
     public int getChurn() {
         return churn;
     }
     
-    public void setChurn(int churn) {
-        this.churn = churn;
-    }
-    
     public int getAvgChurn() {
         return avgChurn;
-    }
-    
-    public void setAvgChurn(int avgChurn) {
-        this.avgChurn = avgChurn;
     }
     
     public int getChangeSetSize() {
         return changeSetSize;
     }
     
-    public void setChangeSetSize(int changeSetSize) {
-        this.changeSetSize = changeSetSize;
-    }
-    
     public int getAge() {
         return age;
-    }
-    
-    public void setAge(int age) {
-        this.age = age;
     }
     
     public boolean isBuggy() {

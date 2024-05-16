@@ -29,32 +29,16 @@ public class Commit {
         return revCommit;
     }
     
-    public void setRevCommit(RevCommit revCommit) {
-        this.revCommit = revCommit;
-    }
-    
     public String getAuthor() {
         return author;
-    }
-    
-    public void setAuthor(String author) {
-        this.author = author;
     }
     
     public Version getVersion() {
         return version;
     }
     
-    public void setVersion(Version version) {
-        this.version = version;
-    }
-    
     public Date getDate() {
         return date;
-    }
-    
-    public void setDate(Date date) {
-        this.date = date;
     }
     
     public List<String> getClasses() {
@@ -67,10 +51,6 @@ public class Commit {
     
     public List<String> getTouchedClasses() {
         return touchedClasses;
-    }
-    
-    public void setTouchedClasses(List<String> touchedClasses) {
-        this.touchedClasses = touchedClasses;
     }
     
     public void addToTouchedClasses(String file) {
