@@ -182,7 +182,7 @@ public class MLAnalyzer {
                 String auc = String.format(Locale.US, "%.3f", evaluation.areaUnderROC(1));
                 String kappa = String.format(Locale.US, "%.3f", evaluation.kappa());
                 
-                String line = String.format("%s,%d,%s,%s,%s,%s,%s,%s,%s,%s,%s\n", projectName, numberOfTrainingRelease,
+                String line = String.format("%s,%d,%s,%s,%s,%s,%s,%s,%s,%s,%s%n", projectName, numberOfTrainingRelease,
                         classifier, featureSelection, balancing, sensitivity, accuracy, precision, recall, auc, kappa);
                 
                 if(!precision.equals("NaN"))
