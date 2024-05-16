@@ -187,7 +187,7 @@ public class MLAnalyzer {
                 String line = String.format("%s,%d,%s,%s,%s,%s,%s,%s,%s,%s,%s%n", projectName, numberOfTrainingRelease,
                         classifier, featureSelection, balancing, sensitivity, accuracy, precision, recall, auc, kappa);
                 
-                if (!precision.equals("NaN"))
+                if (!precision.equals("NaN") && !auc.equals("NaN"))
                     fileWriter.append(line);
                 counter++;
             }
