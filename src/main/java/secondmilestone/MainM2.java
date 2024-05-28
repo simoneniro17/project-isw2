@@ -38,7 +38,7 @@ public class MainM2 {
         
         // dataset from csv to arff in order to use weka
         Printer.printMessage("Converting from CSV to ARFF...");
-        //CSV2Arff.csvToArffConverter(sourcePathname, destinationPathname);
+        CSV2Arff.csvToArffConverter(sourcePathname, destinationPathname);
         Printer.printMessage("Conversion completed!\n");
         
         // model evaluation on the dataset generated before
