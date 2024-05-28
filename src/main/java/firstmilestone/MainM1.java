@@ -7,15 +7,13 @@ import model.Version;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import retrieve.RetrieveReleaseInfo;
 import retrieve.RetrieveVersions;
+import utils.DiscardVersions;
 import utils.Printer;
 import utils.Properties;
 
 import java.io.IOException;
 import java.text.ParseException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 public class MainM1 {
     
@@ -83,8 +81,12 @@ public class MainM1 {
         Printer.printMessage("Bugginess setted\n");
         
         // populate dataset
-        Printer.printMessage("Populating " + projectName + " CSV with the dataset...");
+        Printer.printMessage("Populating " + projectName + " CSV with the dataset...\n");
         datasetCreator.populateCSV(javaClassInstanceList);
-        Printer.printMessage("CSV populated!\n");
+        
+        // discard versions form the dataset
+        Printer.printMessage("Discarding half versions from " + projectName + " CSV...");
+        DiscardVersions.discardVersions(projectName, versionList);
+        Printer.printMessage("Versions discarded. CSV populated!\n");
     }
 }
