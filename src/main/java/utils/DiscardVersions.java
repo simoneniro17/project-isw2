@@ -17,6 +17,9 @@ import java.util.List;
 
 public class DiscardVersions {
     
+    private DiscardVersions() {
+    }
+    
     /**
      * Discard the last versions of a dataset and maintain just the older ones.
      *
