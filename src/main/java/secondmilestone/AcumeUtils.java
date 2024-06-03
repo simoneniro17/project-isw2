@@ -18,13 +18,14 @@ import java.util.List;
 // utility class for integrating ACUME tool and computing NPofB20 metric
 public class AcumeUtils {
     
-    private AcumeUtils(){}
+    private AcumeUtils() {
+    }
     
     /**
      * Computes the NPofB20 metric for the given test instances and classifier.
      *
      * @param testInstances the instances to test
-     * @param classifier the classifier used for predictions
+     * @param classifier    the classifier used for predictions
      * @return the NPofB20 metric value
      */
     public static String getNpofb(Instances testInstances, Classifier classifier) {
@@ -37,7 +38,7 @@ public class AcumeUtils {
         
         try {
             // prediction for each instance in the test set
-            for(i = 0; i < testInstances.numInstances(); i++) {
+            for (i = 0; i < testInstances.numInstances(); i++) {
                 Instance instance = testInstances.instance(i);
                 
                 boolean actual = false;
@@ -80,7 +81,6 @@ public class AcumeUtils {
         try {
             // set working directory and command for ACUME
             File workDir = new File(Properties.ACUME_DIRECTORY);
-            //String[] cmd = {};
             
             ProcessBuilder processBuilder = new ProcessBuilder("python3", "main.py", "NPofB");
             processBuilder.directory(workDir);
@@ -152,7 +152,7 @@ public class AcumeUtils {
         File file2 = new File(Properties.ACUME_DIRECTORY + "EAM_NEAM_output.csv");
         File file3 = new File(Properties.ACUME_DIRECTORY + "norm_EAM_NEAM_output.csv");
         
-        if(file1.delete() && file2.delete() && file3.delete())
+        if (file1.delete() && file2.delete() && file3.delete())
             Printer.printMessage("Deleted generated files!\n");
         else
             Printer.printError("Error while deleting generated files!\n");
