@@ -20,8 +20,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-import static secondmilestone.AcumeUtils.getNpofb;
-
 public class MLAnalyzer {
     private final String projectName;
     private final String datasetArff;
