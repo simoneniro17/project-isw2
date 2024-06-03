@@ -80,9 +80,9 @@ public class AcumeUtils {
         try {
             // set working directory and command for ACUME
             File workDir = new File(Properties.ACUME_DIRECTORY);
-            String[] cmd = {"python3", "main.py", "NPofB"};
+            //String[] cmd = {};
             
-            ProcessBuilder processBuilder = new ProcessBuilder(cmd);
+            ProcessBuilder processBuilder = new ProcessBuilder("python3", "main.py", "NPofB");
             processBuilder.directory(workDir);
             
             Process process = processBuilder.start();

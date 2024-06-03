@@ -23,7 +23,7 @@ import java.util.Locale;
 import static secondmilestone.AcumeUtils.getNpofb;
 
 public class MLAnalyzer {
-    private static String projectName;
+    private final String projectName;
     private final String datasetArff;
     private static String npofbValue = null;
     
