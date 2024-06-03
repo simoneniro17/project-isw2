@@ -20,9 +20,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import static secondmilestone.AcumeUtils.getNpofb;
+
 public class MLAnalyzer {
-    private final String projectName;
+    private static String projectName;
     private final String datasetArff;
+    private static String npofbValue = null;
     
     public MLAnalyzer(String projectName) {
         this.projectName = projectName;
@@ -72,7 +75,7 @@ public class MLAnalyzer {
                         // using classifiers
                         for (MLProfile.CLASSIFIER classifier : MLProfile.CLASSIFIER.values()) {
                             evaluation = executeAnalysis(training, testing, classifier, sensitivity);
-                            modelEvaluations.add(new MLModelEval(classifier, featureSelection, balancing, sensitivity, evaluation));
+                            modelEvaluations.add(new MLModelEval(classifier, featureSelection, balancing, sensitivity, evaluation, npofbValue));
                         }
                     }
                 }
@@ -114,6 +117,9 @@ public class MLAnalyzer {
             // model evaluation
             evaluation = new Evaluation(testingSet);
             evaluation.evaluateModel(cls, testingSet);
+            
+            // calculate NPofB20
+            npofbValue = AcumeUtils.getNpofb(testingSet, cls);
         } else {
             CostSensitiveClassifier costSensitiveClassifier = new CostSensitiveClassifier();
             CostMatrix costMatrix = createCostMatrix(1.0, 10.0);
@@ -126,7 +132,12 @@ public class MLAnalyzer {
             
             evaluation = new Evaluation(testingSet, costSensitiveClassifier.getCostMatrix());
             evaluation.evaluateModel(costSensitiveClassifier, testingSet);
+            
+            // calculate NPofB20
+            npofbValue = AcumeUtils.getNpofb(testingSet, cls);
         }
+        
+        npofbValue = getNpofb(testingSet, cls);
         
         return evaluation;
     }
@@ -157,7 +168,7 @@ public class MLAnalyzer {
         String outFileName = Properties.OUTPUT_DIRECTORY + projectName + "results.csv";
         
         try (FileWriter fileWriter = new FileWriter(outFileName)) {
-            fileWriter.append("Dataset,#TrainingRelease,Classifier,Feature Selection,Balancing,Sensitivity,Accuracy,Precision,Recall,AUC,Kappa\n");
+            fileWriter.append("Dataset,#TrainingRelease,Classifier,Feature Selection,Balancing,Sensitivity,Accuracy,Precision,Recall,AUC,Kappa,NPofB20\n");
             int numberOfTrainingRelease = 1;
             int counter = 0;
             
@@ -183,9 +194,10 @@ public class MLAnalyzer {
                 String recall = String.format(Locale.US, "%.3f", evaluation.recall(1));
                 String auc = String.format(Locale.US, "%.3f", evaluation.areaUnderROC(1));
                 String kappa = String.format(Locale.US, "%.3f", evaluation.kappa());
+                String npofb20 = eval.getNpofb20().length() > 5 ? eval.getNpofb20().substring(0, 5) : eval.getNpofb20();
                 
-                String line = String.format("%s,%d,%s,%s,%s,%s,%s,%s,%s,%s,%s%n", projectName, numberOfTrainingRelease,
-                        classifier, featureSelection, balancing, sensitivity, accuracy, precision, recall, auc, kappa);
+                String line = String.format("%s,%d,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s%n", projectName, numberOfTrainingRelease,
+                        classifier, featureSelection, balancing, sensitivity, accuracy, precision, recall, auc, kappa, npofb20);
                 
                 if (!precision.equals("NaN") && !auc.equals("NaN"))
                     fileWriter.append(line);

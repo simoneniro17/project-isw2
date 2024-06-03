@@ -2,9 +2,11 @@ import csv
 import time
 from os import listdir
 from os.path import isfile, join
+import pandas as pd
 import numpy
 from configs import files_path, include_types, exclude_strings
 from models import get_index_value
+
 delimiter = ';'
 processed_csv_file_data = []
 processed_csv_file_data_normalized = []
@@ -41,7 +43,8 @@ for file_num, filename in enumerate(onlyfiles):
         if row_index == 0:
             continue
         lst = row.split(delimiter)  # delimiter
-        id, size, prediction, actual = lst[0], int(lst[1]) if lst[1] else 0, float(lst[2]), True if lst[3].strip().upper() == 'YES' else False
+        id, size, prediction, actual = lst[0], int(lst[1]) if lst[1] else 0, float(lst[2]), True if lst[
+                                                                                                        3].strip().upper() == 'YES' else False
         index = get_index_value(True, actual)
         left = int(prediction * 1000 * 10)
         if prediction - left / 10000 != 0:
@@ -108,6 +111,6 @@ writer.writerows([x.split(";") for x in total_data])
 f.close()
 print(time.time() - t)
 
-import pandas as pd
+
 
 pd.read_csv('auc_output_t.csv', header=None).T.to_csv('auc_output_t.csv', header=False, index=False)

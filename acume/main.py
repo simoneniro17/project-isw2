@@ -2,7 +2,7 @@ import math
 import time
 import sys
 from os import listdir
-from os.path import isfile, join
+from os.path import isfile, join, dirname
 
 from configs import files_path, include_types, start_value, end_value, step, exclude_strings
 from models import DataEntity, ProcessedDataEntity, get_index_value, calculate_MAP, create_file, calculate_AUC, \
