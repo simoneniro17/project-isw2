@@ -137,8 +137,6 @@ public class MLAnalyzer {
             npofbValue = AcumeUtils.getNpofb(testingSet, cls);
         }
         
-        npofbValue = getNpofb(testingSet, cls);
-        
         return evaluation;
     }
     

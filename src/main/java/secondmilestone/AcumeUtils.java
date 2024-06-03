@@ -29,9 +29,6 @@ public class AcumeUtils {
      * @return the NPofB20 metric value
      */
     public static String getNpofb(Instances testInstances, Classifier classifier) {
-        
-        Printer.printMessage("Computing NPofB20...\n");
-        
         List<Acume> acumeList = new ArrayList<>();
         Acume acumeObj;
         int i;
@@ -45,7 +42,6 @@ public class AcumeUtils {
                 int actualClass = (int) instance.classValue();
                 if (actualClass == 1)
                     actual = true;
-                
                 
                 double[] distribution = classifier.distributionForInstance(instance);
                 double prediction = distribution[1];
@@ -127,8 +123,6 @@ public class AcumeUtils {
      * @param acumeList the list of Acume objects to write to the CSV file
      */
     private static void createAcumeCSV(List<Acume> acumeList) {
-        Printer.printMessage("Creating acume.csv file...\n");
-        
         try (FileWriter fileWriter = new FileWriter(Properties.ACUME_DIRECTORY + "acume.csv")) {
             fileWriter.append("ID,Size,Predicted,Actual\n");
             
@@ -140,8 +134,6 @@ public class AcumeUtils {
         } catch (Exception e) {
             Printer.printError(e.getMessage());
         }
-        
-        Printer.printMessage("acume.csv file created\n");
     }
     
     /**
@@ -152,10 +144,7 @@ public class AcumeUtils {
         File file2 = new File(Properties.ACUME_DIRECTORY + "EAM_NEAM_output.csv");
         File file3 = new File(Properties.ACUME_DIRECTORY + "norm_EAM_NEAM_output.csv");
         
-        if (file1.delete() && file2.delete() && file3.delete())
-            Printer.printMessage("Deleted generated files!\n");
-        else
+        if (!(file1.delete() && file2.delete() && file3.delete()))
             Printer.printError("Error while deleting generated files!\n");
-        
     }
 }
